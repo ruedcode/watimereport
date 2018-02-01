@@ -17,6 +17,7 @@ final class Employee : Model {
     var position: String?
     var phone: String?
     var note: String?
+    var isActive: Bool?
     
     let storage = Storage()
     
@@ -28,16 +29,18 @@ final class Employee : Model {
         static let position = "position"
         static let phone = "phone"
         static let note = "note"
+        static let isActive = "isActive"
     }
 
     
     /// Creates a new
-    init(name: String?, serviceUrl: String?, position: String?, phone: String?, note: String?) {
+    init(name: String?, serviceUrl: String?, position: String?, phone: String?, note: String?, isActive: Bool?) {
         self.name = name ?? ""
         self.serviceUrl = serviceUrl ?? ""
         self.position = position ?? ""
         self.phone = phone ?? ""
         self.note = note ?? ""
+        self.isActive = isActive ?? false
     }
     
     // MARK: Fluent Serialization
@@ -50,6 +53,7 @@ final class Employee : Model {
         phone = try row.get(Employee.Keys.phone) ?? ""
         note = try row.get(Employee.Keys.note) ?? ""
         skypeId = try row.get(Employee.Keys.skypeId) ?? ""
+        isActive = try row.get(Employee.Keys.isActive) ?? false
     }
     
     // Serializes the Employee to the database
@@ -61,6 +65,7 @@ final class Employee : Model {
         try row.set(Employee.Keys.phone, phone)
         try row.set(Employee.Keys.note, note)
         try row.set(Employee.Keys.skypeId, skypeId)
+        try row.set(Employee.Keys.isActive, isActive)
         return row
     }
 }
@@ -84,6 +89,7 @@ extension Employee: Preparation {
             builder.string(Employee.Keys.position, length: nil, optional: true, unique: false, default: nil)
             builder.string(Employee.Keys.note, length: nil, optional: true, unique: false, default: nil)
             builder.string(Employee.Keys.skypeId, length: nil, optional: true, unique: false, default: nil)
+            builder.bool(Employee.Keys.isActive, optional: true, unique: false, default: false)
         }
     }
     
@@ -100,7 +106,8 @@ extension Employee: JSONConvertible {
             serviceUrl: try json.get(Employee.Keys.serviceUrl) ?? "",
             position: try json.get(Employee.Keys.position) ?? "",
             phone: try json.get(Employee.Keys.phone) ?? "",
-            note: try json.get(Employee.Keys.note) ?? ""
+            note: try json.get(Employee.Keys.note) ?? "",
+            isActive: try json.get(Employee.Keys.isActive) ?? false
         )
     }
     
@@ -113,6 +120,7 @@ extension Employee: JSONConvertible {
         try json.set(Employee.Keys.phone, phone)
         try json.set(Employee.Keys.note, note)
         try json.set(Employee.Keys.skypeId, skypeId)
+        try json.set(Employee.Keys.isActive, isActive)
         return json
     }
 }
@@ -143,6 +151,9 @@ extension Employee: Updateable {
             },
             UpdateableKey(Employee.Keys.skypeId, String?.self) { item, skypeId in
                 item.skypeId = skypeId
+            },
+            UpdateableKey(Employee.Keys.isActive, Bool?.self) { item, isActive in
+                item.isActive = isActive
             }
         ]
     }

@@ -23,7 +23,7 @@ class UnregistrationCommand : BaseCommandAction {
         }
         else if let empl = message.from.employee {
             do {
-                empl.skypeId = nil;
+                empl.isActive = false;
                 try empl.save()
             }
             catch {

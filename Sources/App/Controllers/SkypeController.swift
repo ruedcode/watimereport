@@ -68,6 +68,6 @@ extension Skype.Entity.Contact {
     }
     
     var state : State {
-        return employee != nil ? .registered : .unregistered
+        return employee != nil && employee!.isActive! ? .registered : .unregistered
     }
 }

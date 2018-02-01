@@ -56,7 +56,7 @@ final class Command {
         else if let action = action {
             let response = action.perform(message: message)
             send(response)
-            if response != nil && action is RegistrationCommand {
+            if response != nil && action is RegistrationCommand  && message.from.state == .registered {
                 perform(action: HelpCommand().command)
             }
         }

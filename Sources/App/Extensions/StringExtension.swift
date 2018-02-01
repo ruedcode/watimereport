@@ -8,28 +8,14 @@
 import Foundation
 
 extension String {
-//    func capturedGroups(withRegex pattern: String) -> [String] {
-//        var results = [String]()
-//
-//        var regex: NSRegularExpression
-//        do {
-//            regex = try NSRegularExpression(pattern: pattern, options: [])
-//        } catch {
-//            return results
-//        }
-//
-//        let nsString = NSString(string: self)
-//        let all = NSRange(location: 0, length: nsString.length)
-//        regex.enumerateMatches(in: self, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: all) {(result : NSTextCheckingResult?, _, _) in
-//            let capturedRange = result!.range(at: 1)
-//            if !NSEqualRanges(capturedRange, NSMakeRange(NSNotFound, 0)) {
-//                let theResult = nsString.substring(with: result!.range(at: 1))
-//                results.append(theResult)
-//            }
-//        }
-//
-//        return results
-//    }
+
+    func capitalizingFirstLetter() -> String {
+        return prefix(1).uppercased() + dropFirst()
+    }
+    
+    mutating func capitalizeFirstLetter() {
+        self = self.capitalizingFirstLetter()
+    }
    
     func capturedGroups(withRegex pattern: String) -> [String] {
         var results = [String]()

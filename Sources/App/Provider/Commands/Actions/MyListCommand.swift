@@ -54,6 +54,9 @@ class MyListCommand: BaseCommandAction {
             if text.count > 0 {
                 return message.makeResponse(text)
             }
+            else {
+                return message.makeResponse("Нет записей за последние 7 дней")
+            }
         }
         catch {
             
