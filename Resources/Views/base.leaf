@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>#import("title")</title>
+	<link rel="stylesheet" href="/styles/app.css">
+	<script
+	  src="http://code.jquery.com/jquery-3.3.1.slim.min.js"
+	  integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+	  crossorigin="anonymous"></script>
+	<script src="/js/app.js"></script>
+	<script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+</head>
+<body>
+
+#import("content")
+
+</body>
+</html>
