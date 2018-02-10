@@ -6,9 +6,9 @@
 
     <h1>
         <div style="width:350px;margin-left:auto;margin-right:auto;">
-            <a href="/report?date=#(prev)" style="float:left;"><i class="fas fa-angle-double-left"></i></a>
+            <a href="?date=#(prev)" style="float:left;"><i class="fas fa-angle-double-left"></i></a>
             #(title)
-            <a href="/report?date=#(next)" style="float:right;"><i class="fas fa-angle-double-right"></i></a>
+            <a href="?date=#(next)" style="float:right;"><i class="fas fa-angle-double-right"></i></a>
         </div>
 
 

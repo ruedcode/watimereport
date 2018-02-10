@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Vapor
 
 class MyListCommand: BaseCommandAction {
     
@@ -52,6 +53,7 @@ class MyListCommand: BaseCommandAction {
                 text.append("<b raw_pre=\"*\" raw_post=\"*\">\(formatter.string(from: report.date))</b><br />\(report.note)")
             }
             if text.count > 0 {
+                text.append("<br />Подробнее https://watimereport.vapor.cloud/report/\(message.from.employee!.id!.int!)")
                 return message.makeResponse(text)
             }
             else {

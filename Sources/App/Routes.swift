@@ -22,9 +22,12 @@ extension DateReport: JSONConvertible {
 }
 
 final class Routes: RouteCollection {
+    public static var droplet: Droplet?
+    
     let view: ViewRenderer
-    init(_ view: ViewRenderer) {
+    init(_ view: ViewRenderer, _ droplet: Droplet) {
         self.view = view
+        Routes.droplet = droplet
     }
 
     func build(_ builder: RouteBuilder) throws {
@@ -32,77 +35,31 @@ final class Routes: RouteCollection {
         builder.get { req in
             return try self.view.make("welcome")
         }
-        
-        builder.get("report") { req in
-            let formatter = DateFormatter()
-            formatter.locale = Locale(identifier: "ru_RU")
-            formatter.dateFormat = "yyyy-MM"
-            
-            var date = Date()
-            if let string = req.query?["date"]?.string, let selDate = formatter.date(from: string) {
-                date = selDate
-            }
-            
-            
-            let calendar = Calendar.current
-            let range = calendar.range(of: .day, in: .month, for: date)!
-            let numDays = range.count
-            formatter.dateFormat = "MMMM"
-            
-            var components = calendar.dateComponents([.day, .month, .year], from: date)
-            
-            let employees = try! Employee.all()
-            
-            var reports: [DateReport] = []
-            
-            for day in 1...numDays {
-                components.day = day
-                let tmpDate = calendar.date(from: components)!
-                var tmpReports : [String] = []
-                for employee in employees {
-                    do {
-                        guard let report = try employee.times?.filter(Time.Keys.date, .equals, tmpDate).first() else {
-                            tmpReports.append("-")
-                            continue
-                        }
-                        tmpReports.append(report.note)
-                    }
-                    catch {
-                        tmpReports.append("-")
-                    }
-                }
-                reports.append(DateReport(name: "\(day) \(formatter.string(from: date))", reports: tmpReports))
-            }
-            var context = [String: Any]()
-            
-            context["employees"] = try! employees.makeJSON()
-            context["reports"] = try! reports.makeJSON()
-            formatter.dateFormat = "LLLL yyyy"
-            context["title"] = formatter.string(from: date)
-            
-            components = calendar.dateComponents([.month, .year], from: date)
-            formatter.dateFormat = "yyyy-MM"
-            components.day = 1
-            components.month = components.month! - 1
-            context["prev"] = formatter.string(from: calendar.date(from: components)!)
-            components.month = components.month! + 2
-            context["next"] = formatter.string(from: calendar.date(from: components)!)
-            return try self.view.make("report", context)
-        }
-
-//        /// GET /hello/...
-//        builder.resource("hello", HelloController(view))
     
         let skype = SkypeController()
         
+        let report = ReportController(view)
+        
+        builder.get("report", ":id", handler: report.index)
+        builder.get("report", handler: report.index)
+        
         builder.post("skype", handler: skype.index)
-//        builder.resource("skype", skype.index)
         
 
-        // response to requests to /info domain
-        // with a description of the request
-        builder.get("info") { req in
-            return req.description
+//        // response to requests to /info domain
+//        // with a description of the request
+//        builder.get("info") { req in
+//            return req.description
+//        }
+        
+        builder.get("time") { req in
+            let formatter = DateFormatter()
+            let date = Date()
+//            formatter.dateFormat = "dd.MM.yyyy 12:00"
+//            let dateMask = formatter.string(from: date)
+            formatter.dateFormat = "dd.MM.yyyy HH:00"
+            let actualDate = formatter.string(from: date)
+            return actualDate
         }
 
     }
