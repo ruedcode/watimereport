@@ -69,6 +69,7 @@ class BaseTrackCommand: BaseCommandAction {
             do {
                 try! report.save()
             }
+            self.currentButton = nil
             return message.makeResponse("\(formatter.string(from: report.date))<br /><i raw_pre=\"_\" raw_post=\"_\">\(report.note)</i><br />(highfive)")
         }
         else {
