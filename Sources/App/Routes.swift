@@ -53,13 +53,18 @@ final class Routes: RouteCollection {
 //        }
         
         builder.get("time") { req in
+            var res = ""
+            var tz = NSTimeZone.default
+            res.append(tz.identifier)
+            NSTimeZone.default = TimeZone(identifier: "Asia/Yekaterinburg")!
+            tz = NSTimeZone.default
+            res.append(tz.identifier)
             let formatter = DateFormatter()
             let date = Date()
-//            formatter.dateFormat = "dd.MM.yyyy 12:00"
-//            let dateMask = formatter.string(from: date)
             formatter.dateFormat = "dd.MM.yyyy HH:00"
             let actualDate = formatter.string(from: date)
-            return actualDate
+            res.append(actualDate)
+            return res
         }
 
     }

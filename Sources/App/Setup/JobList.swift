@@ -17,7 +17,7 @@ class JobList {
         Jobs.add(interval: 1.seconds ) {
             let formatter = DateFormatter()
             let date = Date()
-            formatter.dateFormat = "dd.MM.yyyy 09:00"
+            formatter.dateFormat = "dd.MM.yyyy 14:00"
             let dateMask = formatter.string(from: date)
             formatter.dateFormat = "dd.MM.yyyy HH:00"
             let actualDate = formatter.string(from: date)
