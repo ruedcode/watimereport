@@ -31,7 +31,9 @@ class SimpleTrackCommand: BaseTrackCommand {
     override func parseMessage(message: Skype.Entity.RecieveMessage) -> (date: Date, note: String) {
         
         let text = self.text(message)
-        let components = dateComponents
+        var components = dateComponents
+        components.hour = 0
+        components.minute = 0
         let date = Calendar.current.date(from: components)
         return (date!, text)
     }

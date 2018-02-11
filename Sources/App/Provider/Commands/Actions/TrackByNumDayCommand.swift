@@ -41,6 +41,8 @@ class TrackByNumDayCommand: BaseTrackCommand {
         text = text.stringByReplacingFirstOccurrenceOfString(target: day, withString: "")
         var components = dateComponents
         components.day = day.int
+        components.hour = 0
+        components.minute = 0
         
         let date = Calendar.current.date(from: components)
         return (date!, text)

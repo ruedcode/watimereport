@@ -45,6 +45,8 @@ class TrackByDayMonthCommand : TrackByNumDayCommand {
         var components = dateComponents
         components.day = day.int
         components.month = month.int
+        components.hour = 0
+        components.minute = 0
         
         let date = Calendar.current.date(from: components)
         return (date!, text)
