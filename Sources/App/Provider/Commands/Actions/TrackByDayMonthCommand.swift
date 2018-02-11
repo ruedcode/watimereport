@@ -43,6 +43,7 @@ class TrackByDayMonthCommand : TrackByNumDayCommand {
         
         text = text.stringByReplacingFirstOccurrenceOfString(target: "\(day).\(month)", withString: "")
         var components = dateComponents
+        components.timeZone = TimeZone(abbreviation: "UTC")!
         components.day = day.int
         components.month = month.int
         components.hour = 0

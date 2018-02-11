@@ -34,6 +34,7 @@ class SimpleTrackCommand: BaseTrackCommand {
         var components = dateComponents
         components.hour = 0
         components.minute = 0
+        components.timeZone = TimeZone(abbreviation: "UTC")!
         let date = Calendar.current.date(from: components)
         return (date!, text)
     }
