@@ -35,28 +35,36 @@ final class ReportController {
 
         var components = calendar.dateComponents([.day, .month, .year], from: date)
 
-        var employees = try! Employee.all()
+        var employees = try! Employee.makeQuery().filter(Employee.Keys.isActive, .equals, true).all()
         if let emp = emp {
             employees = employees.filter({ (row) -> Bool in
                 return row.id?.int == emp
             })
         }
+        let ids = employees.map { (row) -> Int in
+            return row.id!.int!
+        }
+        
+        
+        
+        let times = try! Time.makeQuery().filter(Time.Keys.employeeId, in: ids)
+            .filter(raw: "MONTH(date) = \(components.month!) AND YEAR(date) = \(components.year!)")
+            .all()
 
         var reports: [DateReport] = []
 
         for day in 1...numDays {
             components.day = day
+            components.timeZone = TimeZone(identifier: "UTC")
             let tmpDate = calendar.date(from: components)!
             var tmpReports : [String] = []
             for employee in employees {
-                do {
-                    guard let report = try employee.times?.filter(Time.Keys.date, .equals, tmpDate).first() else {
-                        tmpReports.append("-")
-                        continue
-                    }
-                    tmpReports.append(report.note)
+                if let row = times.filter({ (item) -> Bool in
+                    return item.employeeId.int! == employee.id!.int! && item.date == tmpDate
+                }).first {
+                    tmpReports.append(row.note)
                 }
-                catch {
+                else {
                     tmpReports.append("-")
                 }
             }
