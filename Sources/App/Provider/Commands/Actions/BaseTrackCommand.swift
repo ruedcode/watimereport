@@ -94,7 +94,9 @@ class BaseTrackCommand: BaseCommandAction {
     
     private func report(date: Date, employee: Employee) -> Time {
         do {
-            if let time = try employee.times?.filter(Time.Keys.date, date).first() {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            if let time = try employee.times?.makeQuery().filter(raw: "DATE(\(Time.Keys.date, date)) = '\(formatter.string(from:date))'").first() {
                 return time
             }
         }
