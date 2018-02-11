@@ -56,9 +56,9 @@ final class Routes: RouteCollection {
             var res = ""
             var tz = NSTimeZone.default
             res.append(tz.identifier)
-            NSTimeZone.default = TimeZone(identifier: "Asia/Yekaterinburg")!
-            tz = NSTimeZone.default
-            res.append(tz.identifier)
+//            NSTimeZone.default = TimeZone(identifier: "Asia/Yekaterinburg")!
+//            tz = NSTimeZone.default
+//            res.append(tz.identifier)
             let formatter = DateFormatter()
             let date = Date()
             formatter.dateFormat = "dd.MM.yyyy HH:00"
