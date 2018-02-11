@@ -1,3 +1,4 @@
+import Foundation
 import App
 
 /// We have isolated all of our App's logic into
@@ -16,6 +17,8 @@ import App
 ///
 /// .run() runs the Droplet's commands,
 /// if no command is given, it will default to "serve"
+
+NSTimeZone.default = TimeZone(identifier: "Asia/Yekaterinburg")!
 let config = try Config()
 try config.setup()
 
