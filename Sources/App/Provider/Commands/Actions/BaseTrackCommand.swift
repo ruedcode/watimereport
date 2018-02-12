@@ -18,7 +18,7 @@ class BaseTrackCommand: BaseCommandAction {
         return ""
     }
     
-    internal var prevMessage : Skype.Entity.RecieveMessage?
+    internal var prevMessage : [String: Skype.Entity.RecieveMessage] = [:]
     
     
     internal var question: String {
@@ -44,7 +44,7 @@ class BaseTrackCommand: BaseCommandAction {
     override func validate(message: Skype.Entity.RecieveMessage) -> Bool {
         _ = super.validate(message: message)
         //если есть прошлое собщение
-        if prevMessage != nil, let button = findButton(message: message) {
+        if prevMessage[message.from.id] != nil, let button = findButton(message: message) {
             currentButton = button
             return true
         }
@@ -62,7 +62,7 @@ class BaseTrackCommand: BaseCommandAction {
         formatter.locale = Locale(identifier: "ru_RU")
         formatter.dateStyle = .short
         
-        if let button = currentButton, let prevMessage = prevMessage  {
+        if let button = currentButton, let prevMessage = prevMessage[message.from.id] {
             let parsed = parseMessage(message: prevMessage)
             let report = self.report(date: parsed.date, employee: employee)
             report.note = button == .append ? report.note + "\n\n" + parsed.note : parsed.note
@@ -82,12 +82,13 @@ class BaseTrackCommand: BaseCommandAction {
             let report = self.report(date: parsed.date, employee: employee)
             if report.exists {
                 
-                prevMessage = message
+                prevMessage[message.from.id] = message
                 let text = "(wait) На дату \(formatter.string(from: parsed.date)) уже есть запись о работе:<br /><i raw_pre=\"_\" raw_post=\"_\">\(report.note)</i>. <br/>Вы можете заменить или дополнить запись"
                 return message.makeAnswerResponse(text, question: question, buttons: buttons)
             }
             report.note = parsed.note
             try! report.save()
+            prevMessage[message.from.id] = nil
             return message.makeResponse("\(formatter.string(from: report.date))<br /><i raw_pre=\"_\" raw_post=\"_\">\(report.note)</i><br />(highfive)")
         }
     }
