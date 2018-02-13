@@ -1,13 +1,15 @@
+body, html {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	overflow-y: hidden;
+}
 body {
 	font-family: sans-serif;
 }
-
-body, html {
-	height: 100%;
-}
 h1{
    font-size: 30px;
-   color: #fff;
+   color: #000;
    text-transform: uppercase;
    font-weight: 300;
    text-align: center;
@@ -16,13 +18,13 @@ h1{
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
 body{
-   background: -webkit-linear-gradient(left, #25c481, #25b7c4);
-   background: linear-gradient(to right, #25c481, #25b7c4);
+   /* background: -webkit-linear-gradient(left, #25c481, #25b7c4); */
+   /* background: linear-gradient(to right, #25c481, #25b7c4); */
    font-family: 'Roboto', sans-serif;
 }
 
 a {
-   color: #fff;
+   color: #000;
    text-decoration: none;
 }
 a:hover {
@@ -36,7 +38,7 @@ section {
 
 thead th {
 	text-align: center;
-	background: none !important;
+	/* background: none !important; */
 }
 
 th, thead th.first{
@@ -44,45 +46,51 @@ th, thead th.first{
    text-align: left;
    font-weight: 500;
    font-size: 14px;
-   color: #fff;
+   color: #555;
    text-transform: uppercase;
-   min-width: 180px;
-   background: -webkit-linear-gradient(left, #25c481, #26C28E) !important;
-   background: linear-gradient(to right, #25c481, #26C28E) !important;
+   /* background: -webkit-linear-gradient(left, #25c481, #26C28E) !important; */
+   /* background: linear-gradient(to right, #25c481, #26C28E) !important; */
    /* border-bottom: solid 1px rgba(255,255,255,0.1); */
-   border: solid 1px rgba(255,255,255,0.1);
+   border: solid 1px rgba(0,0,0,0.1);
 }
 td{
+   min-width: 200px;
    padding: 15px;
    text-align: left;
    vertical-align:middle;
    font-weight: 300;
    font-size: 12px;
-   color: #fff;
-   border: solid 1px rgba(255,255,255,0.1);
+   color: #555;
+   border: solid 1px rgba(0,0,0,0.1);
+}
+
+th.first {
+	text-align: right;
+	min-width: 50px;
 }
 
 th.alpha, td.alpha {
-	color: rgba(255, 255, 255, 0.5) !important;
+	color: rgba(0, 0, 0, 0.2) !important;
 	padding: 2px 15px;
 }
 th.alpha {
-	background: -webkit-linear-gradient(left, #3FC990, #3FC899) !important;
-    background: linear-gradient(to right, #3FC990, #3FC899) !important;
+	/* background: -webkit-linear-gradient(left, #3FC990, #3FC899) !important; */
+    /* background: linear-gradient(to right, #3FC990, #3FC899) !important; */
 }
 
 
 td.alpha{
-	background: rgba(255, 255, 255, 0.1) !important;
+	/* background: rgba(255, 255, 255, 0.1) !important; */
 }
 
 td.alpha:hover{
-	color: rgba(255, 255, 255, 1) !important;
+	color: rgba(0, 0, 0, 1) !important;
 	background: none !important;
 }
 
 #parent {
-	border: solid 1px rgba(255,255,255,0.1);
+	border: solid 1px rgba(0,0,0,0.1);
+	height: calc(100vh - 150px);
 	/* height: 800px; */
 }
 

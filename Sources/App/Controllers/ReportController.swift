@@ -31,7 +31,7 @@ final class ReportController {
         let calendar = Calendar.current
         let range = calendar.range(of: .day, in: .month, for: date)!
         let numDays = range.count
-        formatter.dateFormat = "MMMM (EE)"
+        formatter.dateFormat = "(EE)"
 
         var components = calendar.dateComponents([.day, .month, .year], from: date)
 
