@@ -65,7 +65,7 @@ final class ReportController {
                     tmpReports.append(row.note.stringByReplacingFirstOccurrenceOfString(target: "\n", withString: "<br /><br />"))
                 }
                 else {
-                    tmpReports.append("-")
+                    tmpReports.append("")
                 }
             }
             let tmp = calendar.dateComponents([.weekday], from: tmpDate)
