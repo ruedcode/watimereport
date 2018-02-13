@@ -11,37 +11,31 @@
             <a href="?date=#(next)" style="float:right;"><i class="fas fa-angle-double-right"></i></a>
         </div>
 
-
-
     </h1>
     <section>
-        <div class="tbl-header">
-            <table cellpadding="0" cellspacing="0" border="0">
+        <div id="parent">
+            <table class="fixTable table" cellspacing="0" cellpadding="0">
                 <thead>
                     <tr>
-                          <th>Дата</th>
+                        <th class="first">Дата</th>
                         #loop(employees, "employee") {
-                          <th>#(employee.name)</th>
+                            <th>#(employee.name)</th>
                         }
                     </tr>
                 </thead>
-            </table>
-        </div>
-        <div class="tbl-content">
-            <table cellpadding="0" cellspacing="0" border="0">
                 <tbody>
                     #loop(reports, "item") {
-                        <tr>
-                            <td>#(item.name)</td>
+                       <tr>
+                           <th>#(item.name)</th>
 
-                            #loop(item.reports, "report") {
-                              <td>#(report)</td>
-                            }
-                        </tr>
+                           #loop(item.reports, "report") {
+                             <td>#(report)</td>
+                           }
+                       </tr>
                     }
                 </tbody>
             </table>
+
         </div>
     </section>
-
 }

@@ -30,7 +30,7 @@ class SimpleTrackCommand: BaseTrackCommand {
     
     override func parseMessage(message: Skype.Entity.RecieveMessage) -> (date: Date, note: String) {
         
-        let text = self.text(message)
+        let text = message.text.trim()
         var components = dateComponents
         components.hour = 0
         components.minute = 0

@@ -36,7 +36,7 @@ class TrackByNumDayCommand: BaseTrackCommand {
     
     override func parseMessage(message: Skype.Entity.RecieveMessage) -> (date: Date, note: String) {
         let day = matches(message: message).first!
-        var text = self.text(message)
+        var text =  message.text.trim()
         
         text = text.stringByReplacingFirstOccurrenceOfString(target: day, withString: "")
         var components = dateComponents
@@ -46,7 +46,6 @@ class TrackByNumDayCommand: BaseTrackCommand {
         components.minute = 0
         
         let date = Calendar.current.date(from: components)
-        print("date \(date)")
         return (date!, text)
     }
 }

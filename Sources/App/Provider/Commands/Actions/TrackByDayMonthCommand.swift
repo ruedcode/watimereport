@@ -39,7 +39,7 @@ class TrackByDayMonthCommand : TrackByNumDayCommand {
     override func parseMessage(message: Skype.Entity.RecieveMessage) -> (date: Date, note: String) {
         let day = matches(message: message).first!
         let month = matches(message: message).last!
-        var text = self.text(message)
+        var text =  message.text.trim()
         
         text = text.stringByReplacingFirstOccurrenceOfString(target: "\(day).\(month)", withString: "")
         var components = dateComponents
