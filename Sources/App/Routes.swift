@@ -3,6 +3,7 @@ import Foundation
 
 struct DateReport {
     var name : String
+    var isHoliday : Bool = false
     var reports: [String]
 }
 
@@ -10,6 +11,7 @@ extension DateReport: JSONConvertible {
     init(json: JSON) throws {
         name = try json.get("name") ?? ""
         reports = try json.get("reports") ?? []
+        isHoliday = try json.get("isHoliday") ?? false
     }
     
     
@@ -17,6 +19,7 @@ extension DateReport: JSONConvertible {
         var json = JSON()
         try json.set("name", name)
         try json.set("reports", reports)
+        try json.set("isHoliday", isHoliday)
         return json
     }
 }

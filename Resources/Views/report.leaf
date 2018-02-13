@@ -26,10 +26,12 @@
                 <tbody>
                     #loop(reports, "item") {
                        <tr>
-                           <th>#(item.name)</th>
+                           <th class="#if(item.isHoliday){alpha}">#(item.name)</th>
 
                            #loop(item.reports, "report") {
-                             <td>#(report)</td>
+                             <td class="#if(item.isHoliday){alpha}">
+                                 #raw(report)
+                             </td>
                            }
                        </tr>
                     }

@@ -31,7 +31,7 @@ final class ReportController {
         let calendar = Calendar.current
         let range = calendar.range(of: .day, in: .month, for: date)!
         let numDays = range.count
-        formatter.dateFormat = "MMMM"
+        formatter.dateFormat = "MMMM (EE)"
 
         var components = calendar.dateComponents([.day, .month, .year], from: date)
 
@@ -62,13 +62,16 @@ final class ReportController {
                 if let row = times.filter({ (item) -> Bool in
                     return item.employeeId.int! == employee.id!.int! && item.date == tmpDate
                 }).first {
-                    tmpReports.append(row.note)
+                    tmpReports.append(row.note.stringByReplacingFirstOccurrenceOfString(target: "\n", withString: "<br /><br />"))
                 }
                 else {
                     tmpReports.append("-")
                 }
             }
-            reports.append(DateReport(name: "\(day) \(formatter.string(from: date))", reports: tmpReports))
+            let tmp = calendar.dateComponents([.weekday], from: tmpDate)
+            let report = DateReport(name: "\(day) \(formatter.string(from: tmpDate))", isHoliday: tmp.weekday == 7 ||  tmp.weekday == 1, reports: tmpReports)
+//            print("\(tmp.weekday)")
+            reports.append(report)
         }
         var context = [String: Any]()
 
