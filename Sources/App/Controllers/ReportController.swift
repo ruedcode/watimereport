@@ -63,11 +63,11 @@ final class ReportController {
                     return item.employeeId.int! == employee.id!.int! && item.date == tmpDate
                 }).first {
                     print("employee: \(employee.name!) date: \(day) record \(row.note)")
-                    tmpReports.append(row.note.stringByReplacingFirstOccurrenceOfString(target: "\n", withString: "<br /><br />"))
+//                    tmpReports.append(row.note.stringByReplacingFirstOccurrenceOfString(target: "\n", withString: "<br /><br />"))
                 }
                 else {
                     print("employee: \(employee.name!) date: \(day) record NONE")
-                    tmpReports.append("")
+//                    tmpReports.append("")
                 }
             }
             let tmp = calendar.dateComponents([.weekday], from: tmpDate)
@@ -90,8 +90,6 @@ final class ReportController {
         context["next"] = formatter.string(from: calendar.date(from: components)!)
         return try self.view.make("report", context)
     }
-    
-    
     
 }
 
