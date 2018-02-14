@@ -59,7 +59,6 @@ final class ReportController {
             let tmpDate = calendar.date(from: components)!
             var tmpReports : [String] = []
             for employee in employees {
-                print("start employee: \(employee.name!)")
                 if let row = times.filter({ (item) -> Bool in
                     return item.employeeId.int! == employee.id!.int! && item.date == tmpDate
                 }).first {
