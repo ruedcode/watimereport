@@ -62,8 +62,9 @@ final class ReportController {
                 if let row = times.filter({ (item) -> Bool in
                     return item.employeeId.int! == employee.id!.int! && item.date == tmpDate
                 }).first {
-                    print("employee: \(employee.name!) date: \(day) record \(row.note)")
-//                    tmpReports.append(row.note.stringByReplacingFirstOccurrenceOfString(target: "\n", withString: "<br /><br />"))
+                    var note = row.note
+                    print("employee: \(employee.name!) date: \(day) record \(note)")
+                    tmpReports.append(note)
                 }
                 else {
                     print("employee: \(employee.name!) date: \(day) record NONE")
