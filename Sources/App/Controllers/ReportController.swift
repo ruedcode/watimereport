@@ -54,17 +54,21 @@ final class ReportController {
         var reports: [DateReport] = []
 
         for day in 1...numDays {
+            print("start fot date: \(day)")
             components.day = day
             components.timeZone = TimeZone(identifier: "UTC")
             let tmpDate = calendar.date(from: components)!
             var tmpReports : [String] = []
             for employee in employees {
+                print("start employee: \(employee.name!)")
                 if let row = times.filter({ (item) -> Bool in
                     return item.employeeId.int! == employee.id!.int! && item.date == tmpDate
                 }).first {
+                    print("employee: \(employee.name!) record \(row.note)")
                     tmpReports.append(row.note.stringByReplacingFirstOccurrenceOfString(target: "\n", withString: "<br /><br />"))
                 }
                 else {
+                    print("employee: \(employee.name!) record NONE")
                     tmpReports.append("")
                 }
             }
