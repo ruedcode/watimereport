@@ -16,7 +16,7 @@ extension Config {
         Jobs.oneoff(delay: 5.seconds) {
             print("I was delayed by 10 seconds.")
             let jobs = JobList()
-//            jobs.start()
+            jobs.start()
         }
     }
 
