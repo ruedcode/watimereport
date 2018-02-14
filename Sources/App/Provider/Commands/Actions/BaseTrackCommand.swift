@@ -49,6 +49,7 @@ class BaseTrackCommand: BaseCommandAction {
             return true
         }
         else {
+			prevMessage[message.from.id] = nil
             currentButton = nil
         }
         return false

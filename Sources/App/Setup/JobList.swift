@@ -14,6 +14,7 @@ class JobList {
     var lastSend = ""
     
     func start() {
+		
         Jobs.add(interval: 1.seconds ) {
             let formatter = DateFormatter()
             let date = Date()
