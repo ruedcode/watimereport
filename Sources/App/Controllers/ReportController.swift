@@ -53,26 +53,25 @@ final class ReportController {
 
         var reports: [DateReport] = []
 
-        for day in 1...numDays {
-            components.day = day
-            components.timeZone = TimeZone(identifier: "UTC")
-            let tmpDate = calendar.date(from: components)!
-            var tmpReports : [String] = []
-            for employee in employees {
-                if let row = times.filter({ (item) -> Bool in
-                    return item.employeeId.int! == employee.id!.int! && item.date == tmpDate
-                }).first {
-                    tmpReports.append(row.note.stringByReplacingFirstOccurrenceOfString(target: "\n", withString: "<br /><br />"))
-                }
-                else {
-                    tmpReports.append("")
-                }
-            }
-            let tmp = calendar.dateComponents([.weekday], from: tmpDate)
-            let report = DateReport(name: "\(day) \(formatter.string(from: tmpDate))", isHoliday: tmp.weekday == 7 ||  tmp.weekday == 1, reports: tmpReports)
-//            print("\(tmp.weekday)")
-            reports.append(report)
-        }
+//        for day in 1...numDays {
+//            components.day = day
+//            components.timeZone = TimeZone(identifier: "UTC")
+//            let tmpDate = calendar.date(from: components)!
+//            var tmpReports : [String] = []
+//            for employee in employees {
+//                if let row = times.filter({ (item) -> Bool in
+//                    return item.employeeId.int! == employee.id!.int! && item.date == tmpDate
+//                }).first {
+//                    tmpReports.append(row.note.stringByReplacingFirstOccurrenceOfString(target: "\n", withString: "<br /><br />"))
+//                }
+//                else {
+//                    tmpReports.append("")
+//                }
+//            }
+//            let tmp = calendar.dateComponents([.weekday], from: tmpDate)
+//            let report = DateReport(name: "\(day) \(formatter.string(from: tmpDate))", isHoliday: tmp.weekday == 7 ||  tmp.weekday == 1, reports: tmpReports)
+//            reports.append(report)
+//        }
         var context = [String: Any]()
 
         context["employees"] = try! employees.makeJSON()
