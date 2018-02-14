@@ -67,7 +67,7 @@ final class ReportController {
                 }
                 else {
                     print("employee: \(employee.name!) date: \(day) record NONE")
-//                    tmpReports.append("")
+                    tmpReports.append("")
                 }
             }
             let tmp = calendar.dateComponents([.weekday], from: tmpDate)
