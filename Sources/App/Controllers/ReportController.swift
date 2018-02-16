@@ -66,7 +66,7 @@ final class ReportController {
                     print("employee: \(employee.name!) date: \(day) record \(note)")
                     tmpReports.append(
                         ReportRecord(id: row.id?.string,
-                                     text: note.replacingOccurrences(of: "\n", with: "<br />", options: String.CompareOptions.literal, range: nil),
+                                     text: note.replacingOccurrences(of: "\\n", with: "<br>", options: .regularExpression, range: nil),
                                      date: tmpDate,
                                      empId: employee.id!.string!
                         )

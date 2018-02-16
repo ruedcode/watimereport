@@ -9,7 +9,7 @@ $(document).ready(function() {
         }
         modal.find("textarea").val($(this).text());
         var index = $(this).index();
-        modal.find("h2").text($(".fixTable thead th").eq(index).text());
+        modal.find("h2").text($(".fixTable thead th").eq(index).html().replace(/<br>/gi, '\n'));
         var date = new Date($(this).data("date"));
         modal.find("h3").text(date.toLocaleDateString("ru-RU"));
         modal.find("#date").val($(this).data("date"));
