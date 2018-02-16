@@ -29,9 +29,7 @@
                            <th class="#if(item.isHoliday){alpha}">#(item.name)</th>
 
                            #loop(item.reports, "report") {
-                             <td class="#if(item.isHoliday){alpha}">
-                                #raw(report)
-                             </td>
+                            <td class="#if(item.isHoliday){alpha}" data-rec-id="#(report.id)" data-date="#(report.date)" data-emp-id="#(report.empId)">#raw(report.text)</td>
                            }
                        </tr>
                     }
@@ -40,4 +38,18 @@
 
         </div>
     </section>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2></h2>
+            <h3></h3>
+            <textarea name="note" id="note" style="width:100%;font-size:18px;height:200px;"></textarea>
+            <input type="hidden" name="id" id="id" value=""/>
+            <input type="hidden" name="date" id="date" value=""/>
+            <input type="hidden" name="employee_id" id="empId" value=""/>
+            <button class="save">Сохранить</button>
+            <button style="float:right;" class="delete">Удалить</button>
+        </div>
+    </div>
+
 }

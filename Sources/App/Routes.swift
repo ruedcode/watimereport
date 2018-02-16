@@ -4,7 +4,14 @@ import Foundation
 struct DateReport {
     var name : String
     var isHoliday : Bool = false
-    var reports: [String]
+    var reports: [ReportRecord]
+}
+
+struct ReportRecord {
+    var id: String?
+    var text: String
+    var date: Date
+    var empId: String
 }
 
 extension DateReport: JSONConvertible {
@@ -20,6 +27,26 @@ extension DateReport: JSONConvertible {
         try json.set("name", name)
         try json.set("reports", reports)
         try json.set("isHoliday", isHoliday)
+        return json
+    }
+}
+
+extension ReportRecord :JSONConvertible {
+    
+    init(json: JSON) throws {
+        text = try json.get("text") ?? ""
+        id = try json.get("id")
+        date = try json.get("date") ?? Date()
+        empId = try json.get("empId")
+    }
+    
+    
+    func makeJSON() throws -> JSON {
+        var json = JSON()
+        try json.set("text", text)
+        try json.set("id", id)
+        try json.set("date", date)
+        try json.set("empId", empId)
         return json
     }
 }
@@ -47,6 +74,7 @@ final class Routes: RouteCollection {
         builder.get("report", handler: report.index)
         
         builder.post("skype", handler: skype.index)
+        try builder.resource("times", TimeController.self)
         
 
 //        // response to requests to /info domain

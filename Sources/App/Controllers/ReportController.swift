@@ -57,22 +57,37 @@ final class ReportController {
             components.day = day
             components.timeZone = TimeZone(identifier: "UTC")
             let tmpDate = calendar.date(from: components)!
-            var tmpReports : [String] = []
+            var tmpReports : [ReportRecord] = []
             for employee in employees {
                 if let row = times.filter({ (item) -> Bool in
                     return item.employeeId.int! == employee.id!.int! && item.date == tmpDate
                 }).first {
                     let note = row.note
                     print("employee: \(employee.name!) date: \(day) record \(note)")
-                    tmpReports.append(note.stringByReplacingFirstOccurrenceOfString(target: "\\n", withString: "<br>"))
+                    tmpReports.append(
+                        ReportRecord(id: row.id?.string,
+                                     text: note.replacingOccurrences(of: "\n", with: "<br />", options: String.CompareOptions.literal, range: nil),
+                                     date: tmpDate,
+                                     empId: employee.id!.string!
+                        )
+                    )
                 }
                 else {
                     print("employee: \(employee.name!) date: \(day) record NONE")
-                    tmpReports.append("")
+                    tmpReports.append(
+                        ReportRecord(id: nil,
+                                     text: "",
+                                     date: tmpDate,
+                                     empId: employee.id!.string!
+                        )
+                    )
                 }
             }
             let tmp = calendar.dateComponents([.weekday], from: tmpDate)
-            let report = DateReport(name: "\(day) \(formatter.string(from: tmpDate))", isHoliday: tmp.weekday == 7 ||  tmp.weekday == 1, reports: tmpReports)
+            let report = DateReport(
+                name: "\(day) \(formatter.string(from: tmpDate))",
+                isHoliday: tmp.weekday == 7 ||  tmp.weekday == 1,
+                reports: tmpReports)
             reports.append(report)
         }
         var context = [String: Any]()
