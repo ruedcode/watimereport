@@ -53,7 +53,8 @@ class MyListCommand: BaseCommandAction {
                 text.append("<b raw_pre=\"*\" raw_post=\"*\">\(formatter.string(from: report.date))</b><br />\(report.note)")
             }
             if text.count > 0 {
-                text.append("<br />Подробнее https://watimereport.vapor.cloud/report/\(message.from.employee!.id!.int!)")
+                let hash = CryptoHasher(hash: .sha1, encoding: .hex)
+                text.append("<br />Подробнее https://watimereport.vapor.cloud/report/\(try! hash.make(message.from.id).makeString())")
                 return message.makeResponse(text)
             }
             else {

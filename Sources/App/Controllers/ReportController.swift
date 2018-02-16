@@ -8,6 +8,7 @@
 import Vapor
 import HTTP
 import Foundation
+import Crypto
 
 final class ReportController {
     
@@ -26,7 +27,7 @@ final class ReportController {
             date = selDate
         }
         
-        let emp = req.parameters["id"]?.int
+        let emp = req.parameters["id"]?.string
 
         let calendar = Calendar.current
         let range = calendar.range(of: .day, in: .month, for: date)!
@@ -37,15 +38,21 @@ final class ReportController {
 
         var employees = try! Employee.makeQuery().filter(Employee.Keys.isActive, .equals, true).all()
         if let emp = emp {
+            let hash = CryptoHasher(hash: .sha1, encoding: .hex)
             employees = employees.filter({ (row) -> Bool in
-                return row.id?.int == emp
+                if let skypeId = row.skypeId {
+                    return try! hash.make(skypeId).makeString() == emp
+                }
+                return false
+                
             })
         }
         let ids = employees.map { (row) -> Int in
             return row.id!.int!
         }
-        
-        
+        if ids.count == 0 {
+            return Response(redirect: "/report")
+        }
         
         let times = try! Time.makeQuery().filter(Time.Keys.employeeId, in: ids)
             .filter(raw: "MONTH(date) = \(components.month!) AND YEAR(date) = \(components.year!)")
