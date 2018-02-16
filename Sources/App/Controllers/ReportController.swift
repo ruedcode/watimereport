@@ -64,7 +64,7 @@ final class ReportController {
                 }).first {
                     let note = row.note
                     print("employee: \(employee.name!) date: \(day) record \(note)")
-                    tmpReports.append(note)
+                    tmpReports.append(note.stringByReplacingFirstOccurrenceOfString(target: "\\n", withString: "<br>"))
                 }
                 else {
                     print("employee: \(employee.name!) date: \(day) record NONE")

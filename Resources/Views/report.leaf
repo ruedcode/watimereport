@@ -30,7 +30,7 @@
 
                            #loop(item.reports, "report") {
                              <td class="#if(item.isHoliday){alpha}">
-                                 #raw(report)
+                                #raw(report)
                              </td>
                            }
                        </tr>
